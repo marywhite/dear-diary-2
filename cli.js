@@ -8,6 +8,8 @@ const cli = meow(`
 	Usage
     $ dear-diary write
     $ dear-diary read
+    $ dear-diary read <keyword>
+    $ dear-diary read <DD/MM/YYYY>
 	  $ dear-diary myname <name>
   Examples
     $ dear-diary write
