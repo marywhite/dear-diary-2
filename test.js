@@ -17,3 +17,8 @@ test('myname', async t => {
   const gets = await execa.stdout('./cli.js', ['myname'])
   t.regex(gets, /hi how are you jane/)
 })
+
+test('throws exception', async t => {
+  const {stdout} = await t.throws(execa('./cli.js'))
+  t.regex(stdout, /i don't have anything for that, dear/)
+})
