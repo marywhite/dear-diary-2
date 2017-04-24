@@ -17,6 +17,13 @@ const cli = meow(`
     $ ${chalk.bold('Tue Feb 14 2017 hating love today')}
     $ ${chalk.bold('Mon Apr 24 2017 what is love even')}
     $ ${chalk.bold('Mon Apr 24 2017 thinking of you today')}
+
+    $ dear-diary read 04/24/2017
+    $ ${chalk.bold('Mon Apr 24 2017 thinking of you today')}
+
+    $ dear-diary read love
+    $ ${chalk.bold('Tue Feb 14 2017 hating love today')}
+    $ ${chalk.bold('Mon Apr 24 2017 what is love even')}
 `, {
 })
 
@@ -25,8 +32,7 @@ const [input, ...etc] = cli.input
 try {
   commands[input](etc)
 } catch (err) {
-  console.log(err)
-  console.log('i don\'t have anything for that, dear')
+  console.log(chalk.dim('i don\'t have anything for that, dear'))
   process.exit(1)
 }
 

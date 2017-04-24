@@ -27,18 +27,35 @@ function write() {
     })
 }
 
-function read() {
+function read(etc) {
   const diary = config.get('diary')
-  const entries = Object.keys(diary)
-    .map(timestamp => {
+  const criteria = etc.map(query => {
+    let re = new RegExp(query, 'i')
+    const d = new Date(Date.parse(query))
+
+    if (!isNaN(d)) {
+      re = new RegExp(d.toDateString(), 'i')
+    }
+
+    return re
+  })
+
+  const matches = Object.keys(diary)
+    .filter(timestamp => {
       const writing = diary[timestamp]
       const d = new Date(Number(timestamp)).toDateString()
-      console.log(chalk.bold(`${d} | ${writing}`))
-      return diary[timestamp]
+
+      let matched
+      if (criteria.length === 0 || criteria.every(c => c.test(`${writing} ${d}`))) {
+        console.log(chalk.bold(`${d} | ${writing}`))
+        matched = true
+      }
+
+      return matched
     })
 
-  if (entries.length === 0) {
-    console.log(chalk.bold('hmm couldn\'t find anything like that xo'))
+  if (matches.length === 0) {
+    console.log(chalk.dim('hmm couldn\'t find anything like that xo'))
   }
 }
 
