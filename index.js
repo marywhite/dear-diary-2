@@ -3,15 +3,29 @@ const prompt = require('prompt')
 const Promise = require('bluebird')
 const chalk = require('chalk')
 const Conf = require('conf')
+const arrayShuffle = require('array-shuffle')
 
 const _get = Promise.promisify(prompt.get)
 const config = new Conf()
+
+const petNames = [
+  'angel',
+  'love',
+  'dear'
+]
+const _name = config.get('profile.name')
+
+if (_name) {
+  petNames.push(_name)
+}
+
+const usr = () => arrayShuffle(petNames).pop()
 
 function write() {
   prompt.message = '💖'
   const properties = {
     data: {
-      description: chalk.yellow('what\'s on your mind dear')
+      description: chalk.yellow(`what's on your mind ${usr()}`)
     }
   }
   prompt.start()
@@ -19,11 +33,11 @@ function write() {
   return _get({properties})
     .then(result => {
       config.set(`diary.${Date.now()}`, result.data)
-      console.log(chalk.magenta('thanks for sharing love'))
+      console.log(chalk.magenta(`thanks for sharing ${usr()}`))
       return result.data
     })
     .catch(() => {
-      console.log(chalk.red('hm, i didn\'t quite get that'))
+      console.log(chalk.red(`hm, i didn't quite get that ${usr()}`))
     })
 }
 
@@ -55,11 +69,28 @@ function read(etc) {
     })
 
   if (matches.length === 0) {
-    console.log(chalk.dim('hmm couldn\'t find anything like that xo'))
+    console.log(chalk.dim(`hmm couldn't find anything like that ${usr()} xo`))
+  }
+}
+
+function myname(etc) {
+  const [name] = etc
+
+  if (name) {
+    config.set('profile.name', name)
+    console.log(chalk.magenta(`nice to meet you ${name}`))
+    return
+  }
+
+  if (_name) {
+    console.log(chalk.green(`hi how are you ${_name}`))
+  } else {
+    console.log(chalk.red(`hm, i didn't quite get that ${usr()}`))
   }
 }
 
 exports.commands = {
   write,
-  read
+  read,
+  myname
 }

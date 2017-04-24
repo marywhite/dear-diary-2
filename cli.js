@@ -8,7 +8,7 @@ const cli = meow(`
 	Usage
     $ dear-diary write
     $ dear-diary read
-	
+	  $ dear-diary myname <name>
   Examples
     $ dear-diary write
     $ 💖   ${chalk.yellow('what\'s on your mind angel?')}
@@ -24,6 +24,9 @@ const cli = meow(`
     $ dear-diary read love
     $ ${chalk.bold('Tue Feb 14 2017 hating love today')}
     $ ${chalk.bold('Mon Apr 24 2017 what is love even')}
+
+    $ dear-diary myname jane
+    $ ${chalk.blue('nice to meet you jane')}
 `, {
 })
 

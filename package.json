@@ -16,6 +16,7 @@
     "cli.js"
   ],
   "dependencies": {
+    "array-shuffle": "^1.0.1",
     "bluebird": "^3.5.0",
     "chalk": "^1.1.3",
     "conf": "^0.12.0",
