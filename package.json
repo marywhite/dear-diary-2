@@ -1,0 +1,15 @@
+{
+  "name": "dear-diary2",
+  "description": "feelings",
+  "version": "1.0.0",
+  "license": "MIT",
+  "bin": {
+    "dear-diary": "cli.js"
+  },
+  "engines": {
+    "node": ">=4"
+  },
+  "dependencies": {
+    "meow": "^3.7.0"
+  }
+}
